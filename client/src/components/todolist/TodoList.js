@@ -139,16 +139,12 @@ const TodoList = () => {
   const postTask = async () =>{
     try {
       await axios.post(`${localHost}/create`,{Task: dataTosend.Task, Date:dataTosend.Date, Status:dataTosend.Status})
+      fetchData()
     } catch (err) {
       console.error(err)
     }
-    renderTask()
   }
 
-  // render the task information to the table 
-  const renderTask = () =>{
-    setDataSource(prev=> [...prev,dataTosend])
-  }
 
   //// open a modal, remove task from table and delete task from db - deleteTask
   const removeTaskFromTable = (record) => {
@@ -187,7 +183,7 @@ const TodoList = () => {
     try {
       await axios({ 
         method: 'put',
-        url:`http://localhost:3001/update/${taskObj.id}`,
+        url:`${localHost}/update/${taskObj.id}`,
         data: {
           Task: taskObj.Task,
           Date: taskObj.Date,
